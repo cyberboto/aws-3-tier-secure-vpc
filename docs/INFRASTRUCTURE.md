@@ -97,3 +97,22 @@ access with no inbound path from the internet at all.
   no legitimate reason to reach anything except the app server. Combined
   with having no internet route at the network layer, the database is
   protected by two independent layers of defense.
+
+## 8. EC2 application server
+
+- Name: aws-cloud-security-app-server
+- AMI: Amazon Linux 2023
+- Instance type: t2.micro (free-tier eligible)
+- Subnet: private-app-subnet-1
+- Public IP: None (disabled at launch)
+- Security group: app-sg
+
+Access method: AWS Systems Manager Session Manager, not SSH. This instance
+has no public IP and lives in a private subnet with no inbound route from
+the internet. An IAM role (app-server-ssm-role, scoped to the
+AmazonSSMManagedInstanceCore policy) is attached to the instance, allowing
+it to register with Systems Manager and accept shell sessions initiated
+through the AWS console. No inbound port is opened to enable this -- the
+instance reaches Systems Manager over its existing outbound path through
+the NAT Gateway. This is a stronger access pattern than opening port 22 to
+the internet and relying on key-pair hygiene alone.
