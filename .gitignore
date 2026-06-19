@@ -1,0 +1,20 @@
+# Secrets and credentials — never commit these
+.env
+.env.*
+*.pem
+*.key
+credentials
+aws-credentials*
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Editor junk
+.vscode/
+.idea/
+
+# Dependency folders (once app/ has real code)
+node_modules/
+__pycache__/
+*.pyc
